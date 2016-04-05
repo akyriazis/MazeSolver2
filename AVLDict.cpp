@@ -147,7 +147,7 @@ void AVLDict::double_rotate_right(node *&b) {
 void AVLDict::add(MazeState *key, MazeState *pred) {
 	addHelper(createNode(key, pred), root);
 }
-AVLDict::node * AVLDict::addHelper(node * toAdd, node *& root) {
+void AVLDict::addHelper(node * toAdd, node *& root) {
 	if (root == NULL) {
 		root = toAdd;
 		return;
