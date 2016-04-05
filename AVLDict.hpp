@@ -49,7 +49,7 @@ class AVLDict : public PredDict
     
     node * createNode(MazeState * key, MazeState * value);
     
-	node * addHelper(node * toAdd, node *& root);
+	void addHelper(node * toAdd, node *& root);
   };
 
 #endif
