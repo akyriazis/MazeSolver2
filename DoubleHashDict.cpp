@@ -70,7 +70,7 @@ void DoubleHashDict::record_stats(int probes) {
 
 int DoubleHashDict::hash1(string keyID) {
   int h=0;
-  for (int i=keyID.length()-1; i>=0; i--) {
+  for (int i=(int)keyID.length()-1; i>=0; i--) {
     h = (keyID[i] + 31*h) % size;
   }
 // 221 Students:  DO NOT CHANGE OR DELETE THE NEXT FEW LINES!!!
@@ -85,7 +85,7 @@ std::cout << "Hash 1:  " << keyID << " to " << h << std::endl;
 
 int DoubleHashDict::hash2(string keyID) {
   int h=0;
-  for (int i=keyID.length()-1; i>=0; i--) {
+  for (int i=(int)keyID.length()-1; i>=0; i--) {
     h = (keyID[i] + 29*h) % size;
   }
   // Make sure second hash is never 0 or size
@@ -103,7 +103,7 @@ std::cout << "Hash 2:  " << keyID << " to " << h << std::endl;
 
 int DoubleHashDict::hash3(string keyID) {
   int h=0;
-  for (int i=keyID.length()-1; i>=0; i--) {
+  for (int i=(int)keyID.length()-1; i>=0; i--) {
     h = (keyID[i] + 29*h) % size;
   }
   // Make sure second hash is never 0 or size
@@ -141,6 +141,44 @@ std::cout << "*** REHASHING " << size;
   // Rehash all the data over
 
   // No need to delete the data, as all copied into new table.
+  int osize=size;
+  bucket *table2;
+       table2=table;
+
+  // Get a bigger table
+  do{
+ 
+   size_index++;
+   
+   size=primes[size_index];
+
+   }while(size<=osize);
+   
+//size_index++;
+//size=LinearHashDict::notprimes[size_index];
+    table=new bucket[size]();
+std::cout<<"size "<<size<<"o "<<osize<<" index "<<size_index<<std::endl;
+  // Rehash all the data over
+  for (int j=0; j<osize; j++){
+ if(table2[j].key!=NULL){
+  int probe;
+    int i=0;
+    int p2;
+int probe1;
+    do{
+    
+     probe1=hash1(table2[j].key->getUniqId());
+     p2=hash2(table2[j].key->getUniqId());
+     probe=(probe1+i*p2)%size;
+     i++;
+    }while(table[probe].key!=NULL&&(((probe1+i*p2)%size)!=(probe1%size)));
+    
+    table[probe].key=table2[j].key;
+    table[probe].data=table2[j].data;
+}
+    
+   
+}
 
 
 // 221 Students:  DO NOT CHANGE OR DELETE THE NEXT FEW LINES!!!
@@ -151,6 +189,7 @@ std::cout << "*** REHASHING " << size;
 std::cout << " to " << size << " ***\n";
 #endif
 // End of "DO NOT CHANGE" Block
+return;
 }
 
 bool DoubleHashDict::find(MazeState *key, MazeState *&pred) {
@@ -158,6 +197,32 @@ bool DoubleHashDict::find(MazeState *key, MazeState *&pred) {
   // Returns the associated value in pred
 
   // TODO:  Your code goes here...
+int probe;
+int i=0;
+int p2;
+int probe1;
+//std::cout<<"find "<<std::endl;
+do{
+    
+     probe1=hash1(key->getUniqId());
+     p2=hash2(key->getUniqId());
+     probe=(probe1+i*p2)%size;
+     i++;
+
+//std::cout<<table[probe].key->getUniqId()<<std::endl;
+//std::cout<<"probe "<<probe<<std::endl;
+if(table[probe].key!=NULL){
+if(table[probe].key->getUniqId()==key->getUniqId()){
+//std::cout<<"pppp "<<std::endl;
+pred=table[probe].data;
+record_stats(probe);
+//std::cout<<"ddd "<<std::endl;
+return true;
+}}
+
+}while(table[probe].key!=NULL&&(((probe1+i*p2)%size)!=(probe1%size)));
+std::cout<<"ffff "<<size<<" "<<size_index<<std::endl;
+return false;
 
 }
 
@@ -168,6 +233,29 @@ void DoubleHashDict::add(MazeState *key, MazeState *pred) {
   if (4*(number+1) > 3*size) rehash();
 
   // TODO:  Your code goes here...
+ int probe;
+int i=0;
+int probe1;
+int p2;
+std::cout<<"add "<<std::endl;
+do{
+ probe1=hash1(key->getUniqId());
+     p2=hash2(key->getUniqId());
+     probe=(probe1+i*p2)%size;
+     i++;
+
+
+}while(table[probe].key!=NULL&&(((probe1+i*p2)%size)!=(probe1%size)));
+if(table[probe].key==NULL){
+//std::cout<<"nnfind "<<std::endl;
+table[probe].key=key;
+table[probe].data=pred;
+number++;
+}
+//for(int k=0;k<size;k++){std::cout<<table[k].key;}
+std::cout<<""<<std::endl;
+
+return;
 
 }
 
