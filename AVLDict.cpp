@@ -45,6 +45,8 @@ AVLDict::node * AVLDict::createNode(MazeState * key, MazeState * value){
 	if (!newNode) return (node*) NULL;
 	newNode->key = key;
 	newNode->data = value;
+	newNode->left = NULL;
+	newNode->right = NULL;
 	newNode->height = 0;
 	return newNode;
 }
@@ -112,7 +114,7 @@ void AVLDict::rotate_left(node *& a) {
 	temp->left = a;
 	update_height(a);
 	update_height(temp);
-	root = temp;
+	a = temp;
 }
 
 void AVLDict::rotate_right(node *& b) {
@@ -131,7 +133,7 @@ void AVLDict::rotate_right(node *& b) {
 	temp->right = b;
 	update_height(b);
 	update_height(temp);
-	root = temp;
+	b = temp;
 }
 
 void AVLDict::double_rotate_left(node *&a) {
