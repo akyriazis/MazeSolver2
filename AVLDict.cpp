@@ -71,8 +71,8 @@ bool AVLDict::find(MazeState *key, MazeState *&pred) {
 	node* current = this->root;
 	int n = 0;
 
-	while (current != NULL && current->key != key) {
-		if (key < current->key) {
+	while (current != NULL && current->key->getUniqId() != key->getUniqId()) {
+		if (key->getUniqId() < current->key->getUniqId()) {
 			current = current->left;
 		} else {
 			current = current->right;
@@ -154,7 +154,7 @@ void AVLDict::addHelper(node * toAdd, node *& root) {
 		root = toAdd;
 		return;
 	}
-	if (toAdd->key < root->key) {
+	if (toAdd->key->getUniqId() < root->key->getUniqId()) {
 		addHelper(toAdd, root->left);
 	} else {
 		addHelper(toAdd, root->right);
