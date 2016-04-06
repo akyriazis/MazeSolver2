@@ -107,10 +107,10 @@ void AVLDict::rotate_left(node *& a) {
 #endif
 	// End of "DO NOT CHANGE" Block
 
-	node * temp = root->right;
-	root->right = temp->left;
-	temp->left = root;
-	update_height(root);
+	node * temp = a->right;
+	a->right = temp->left;
+	temp->left = a;
+	update_height(a);
 	update_height(temp);
 	root = temp;
 }
@@ -126,10 +126,10 @@ void AVLDict::rotate_right(node *& b) {
 #endif
 	// End of "DO NOT CHANGE" Block
 
-	node * temp = root->left;
-	root->left = temp->right;
-	temp->right = root;
-	update_height(root);
+	node * temp = b->left;
+	b->left = temp->right;
+	temp->right = b;
+	update_height(b);
 	update_height(temp);
 	root = temp;
 }
