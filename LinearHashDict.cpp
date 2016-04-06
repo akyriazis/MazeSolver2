@@ -70,7 +70,7 @@ void LinearHashDict::record_stats(int probes) {
 
 int LinearHashDict::hash(string keyID) {
   int h=0;
-  for (int i=keyID.length()-1; i>=0; i--) {
+  for (int i=(int)keyID.length()-1; i>=0; i--) {
     h = (keyID[i] + 31*h) % size;
   }
 // 221 Students:  DO NOT CHANGE OR DELETE THE NEXT FEW LINES!!!
@@ -88,20 +88,50 @@ void LinearHashDict::rehash() {
 // And leave this at the beginning of the rehash() function.
 // We will use this code when marking to be able to watch what
 // your program is doing, so if you change things, we'll mark it wrong.
+std::cout<<"hash1"<<std::endl;
 #ifdef MARKING_TRACE
 std::cout << "*** REHASHING " << size;
 #endif
+std::cout<<"hash"<<std::endl;
 // End of "DO NOT CHANGE" Block
 
 
   // TODO:  Your code goes here...
 
   // Keep a pointer to the old table.
-
+  int osize=size;
+  bucket *table2;
+       table2=table;
   // Get a bigger table
+  do{size_index++;
+   
+   size=primes[size_index];
 
+   }while(size<=osize);
+//size_index++;
+//size=LinearHashDict::notprimes[size_index];
+    table=new bucket[size]();
+std::cout<<"size "<<size<<"o "<<osize<<" index "<<size_index<<std::endl;
   // Rehash all the data over
-
+  for (int j=0; j<osize; j++){
+ if(table2[j].key!=NULL){
+  int probe;
+    int i=0;
+    do{
+    
+     probe=hash(table2[j].key->getUniqId());
+     probe=(probe+i)%size;
+     i++;
+    }while(table[probe].key!=NULL&&((hash(table2[j].key->getUniqId())+i)%size)!=(hash(table2[j].key->getUniqId()))%size);
+    
+    table[probe].key=table2[j].key;
+    table[probe].data=table2[j].data;
+}
+    
+   
+}
+   
+    
   // No need to delete the data, as all copied into new table.
 
 
@@ -113,6 +143,7 @@ std::cout << "*** REHASHING " << size;
 std::cout << " to " << size << " ***\n";
 #endif
 // End of "DO NOT CHANGE" Block
+return;
 }
 
 bool LinearHashDict::find(MazeState *key, MazeState *&pred) {
@@ -120,6 +151,26 @@ bool LinearHashDict::find(MazeState *key, MazeState *&pred) {
   // Returns the associated value in pred
 
   // TODO:  Your code goes here...
+int probe;
+int i=0;
+
+do{
+ probe=hash(key->getUniqId());
+probe=(probe+i)%size;
+i++;
+
+if(table[probe].key!=NULL){
+if(table[probe].key->getUniqId()==key->getUniqId()){
+
+pred=table[probe].data;
+record_stats(probe);
+
+return true;
+}}
+
+}while(table[probe].key!=NULL&&((hash(key->getUniqId())+i)%size)!=(hash(key->getUniqId())%size));
+std::cout<<"ffff "<<size<<" "<<size_index<<std::endl;
+return false;
 
 }
 
@@ -130,6 +181,28 @@ void LinearHashDict::add(MazeState *key, MazeState *pred) {
   if (4*(number+1) > 3*size) rehash();
 
   // TODO:  Your code goes here...
+   int probe;
+int i=0;
+std::cout<<"add "<<std::endl;
+do{
+probe=hash(key->getUniqId());
+probe=(probe+i)%size;
+i++;
+
+
+}while(table[probe].key!=NULL&&((hash(key->getUniqId())+i)%size)!=(hash(key->getUniqId())%size));
+if(table[probe].key==NULL){
+
+table[probe].key=key;
+table[probe].data=pred;
+number++;
+}
+
+std::cout<<""<<std::endl;
+
+return;
+
+   
 
 }
 
