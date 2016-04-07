@@ -147,38 +147,31 @@ std::cout << "*** REHASHING " << size;
 
   // Get a bigger table
   do{
- 
-   size_index++;
-   
-   size=primes[size_index];
+     size_index++;
+     size=primes[size_index];
+    }while(size<=osize);
+   table=new bucket[size]();
 
-   }while(size<=osize);
-   
-//size_index++;
-//size=LinearHashDict::notprimes[size_index];
-    table=new bucket[size]();
-std::cout<<"size "<<size<<"o "<<osize<<" index "<<size_index<<std::endl;
   // Rehash all the data over
-  for (int j=0; j<osize; j++){
- if(table2[j].key!=NULL){
-  int probe;
-    int i=0;
-    int p2;
-int probe1;
-    do{
+   for (int j=0; j<osize; j++){
+        if(table2[j].key!=NULL){
+            int probe;
+            int i=0;
+            int p2;
+            int probe1;
+            do{
+                probe1=hash1(table2[j].key->getUniqId());
+                p2=hash2(table2[j].key->getUniqId());
+                probe=(probe1+i*p2)%size;
+                i++;
+              }while(table[probe].key!=NULL&&(((probe1+i*p2)%size)!=(probe1%size)));
     
-     probe1=hash1(table2[j].key->getUniqId());
-     p2=hash2(table2[j].key->getUniqId());
-     probe=(probe1+i*p2)%size;
-     i++;
-    }while(table[probe].key!=NULL&&(((probe1+i*p2)%size)!=(probe1%size)));
-    
-    table[probe].key=table2[j].key;
-    table[probe].data=table2[j].data;
-}
+            table[probe].key=table2[j].key;
+            table[probe].data=table2[j].data;
+         }
     
    
-}
+       }
 
 
 // 221 Students:  DO NOT CHANGE OR DELETE THE NEXT FEW LINES!!!
@@ -197,34 +190,25 @@ bool DoubleHashDict::find(MazeState *key, MazeState *&pred) {
   // Returns the associated value in pred
 
   // TODO:  Your code goes here...
-int probe;
-int i=0;
-int p2;
-int probe1;
-//std::cout<<"find "<<std::endl;
-do{
-    
-     probe1=hash1(key->getUniqId());
-     p2=hash2(key->getUniqId());
-     probe=(probe1+i*p2)%size;
-     i++;
-
-//std::cout<<table[probe].key->getUniqId()<<std::endl;
-//std::cout<<"probe "<<probe<<std::endl;
-if(table[probe].key!=NULL){
-if(table[probe].key->getUniqId()==key->getUniqId()){
-//std::cout<<"pppp "<<std::endl;
-pred=table[probe].data;
-record_stats(probe);
-//std::cout<<"ddd "<<std::endl;
-return true;
-}}
-
-}while(table[probe].key!=NULL&&(((probe1+i*p2)%size)!=(probe1%size)));
-std::cout<<"ffff "<<size<<" "<<size_index<<std::endl;
-return false;
-
-}
+      int probe;
+      int i=0;
+      int p2;
+      int probe1;
+      do{
+          probe1=hash1(key->getUniqId());
+          p2=hash2(key->getUniqId());
+          probe=(probe1+i*p2)%size;
+          i++;
+          if(table[probe].key!=NULL){
+              if(table[probe].key->getUniqId()==key->getUniqId()){
+                   pred=table[probe].data;
+                   record_stats(i);
+                   return true;
+                }
+           }
+         }while(table[probe].key!=NULL&&(((probe1+i*p2)%size)!=(probe1%size)));
+       record_stats(i);
+       return false;}
 
 // You may assume that no duplicate MazeState is ever added.
 void DoubleHashDict::add(MazeState *key, MazeState *pred) {
@@ -233,29 +217,24 @@ void DoubleHashDict::add(MazeState *key, MazeState *pred) {
   if (4*(number+1) > 3*size) rehash();
 
   // TODO:  Your code goes here...
- int probe;
-int i=0;
-int probe1;
-int p2;
-std::cout<<"add "<<std::endl;
-do{
- probe1=hash1(key->getUniqId());
-     p2=hash2(key->getUniqId());
-     probe=(probe1+i*p2)%size;
-     i++;
-
-
-}while(table[probe].key!=NULL&&(((probe1+i*p2)%size)!=(probe1%size)));
-if(table[probe].key==NULL){
-//std::cout<<"nnfind "<<std::endl;
-table[probe].key=key;
-table[probe].data=pred;
-number++;
-}
-//for(int k=0;k<size;k++){std::cout<<table[k].key;}
-std::cout<<""<<std::endl;
-
-return;
+   int probe;
+   int i=0;
+   int probe1;
+   int p2;
+    do{
+       probe1=hash1(key->getUniqId());
+       p2=hash2(key->getUniqId());
+       probe=(probe1+i*p2)%size;
+       i++;
+       }while(table[probe].key!=NULL&&(((probe1+i*p2)%size)!=(probe1%size)));
+    
+    if(table[probe].key==NULL){
+       table[probe].key=key;
+       table[probe].data=pred;
+       number++;
+        }
+   
+    return;
 
 }
 
