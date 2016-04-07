@@ -26,8 +26,8 @@ const int LinearHashDict::notprimes[] = {100, 300, 1000, 3000, 10000,
 
 LinearHashDict::LinearHashDict() {
   size_index = 0;
-  //size = primes[size_index];
-  size = notprimes[size_index];
+  size = primes[size_index];
+  //size = notprimes[size_index];
   table = new bucket[size](); // Parentheses force initialization to 0
   number = 0;
 
@@ -99,37 +99,34 @@ std::cout<<"hash"<<std::endl;
   // TODO:  Your code goes here...
 
   // Keep a pointer to the old table.
-  int osize=size;
-  bucket *table2;
-       table2=table;
+    int osize=size;
+    bucket *table2;
+    table2=table;
   // Get a bigger table
-  do{size_index++;
-   
-   size=primes[size_index];
+  do{
+      size_index++;
+      size=primes[size_index];
+    }while(size<=osize);
 
-   }while(size<=osize);
-//size_index++;
-//size=LinearHashDict::notprimes[size_index];
-    table=new bucket[size]();
-std::cout<<"size "<<size<<"o "<<osize<<" index "<<size_index<<std::endl;
+  table=new bucket[size]();
+
   // Rehash all the data over
   for (int j=0; j<osize; j++){
- if(table2[j].key!=NULL){
-  int probe;
-    int i=0;
-    do{
+      if(table2[j].key!=NULL){
+         int probe;
+         int i=0;
+         do{
     
-     probe=hash(table2[j].key->getUniqId());
-     probe=(probe+i)%size;
-     i++;
-    }while(table[probe].key!=NULL&&((hash(table2[j].key->getUniqId())+i)%size)!=(hash(table2[j].key->getUniqId()))%size);
+              probe=hash(table2[j].key->getUniqId());
+              probe=(probe+i)%size;
+              i++;
+            }while(table[probe].key!=NULL&&((hash(table2[j].key->getUniqId())+i)%size)!=(hash(table2[j].key->getUniqId()))%size);
     
-    table[probe].key=table2[j].key;
-    table[probe].data=table2[j].data;
-}
+         table[probe].key=table2[j].key;
+         table[probe].data=table2[j].data;
+       }
     
-   
-}
+      }
    
     
   // No need to delete the data, as all copied into new table.
@@ -151,26 +148,25 @@ bool LinearHashDict::find(MazeState *key, MazeState *&pred) {
   // Returns the associated value in pred
 
   // TODO:  Your code goes here...
-int probe;
-int i=0;
+     int probe;
+     int i=0;
 
-do{
- probe=hash(key->getUniqId());
-probe=(probe+i)%size;
-i++;
+    do{
+      probe=hash(key->getUniqId());
+      probe=(probe+i)%size;
+      i++;
+      if(table[probe].key!=NULL)
+      {
+         if(table[probe].key->getUniqId()==key->getUniqId()){
+            pred=table[probe].data;
+            record_stats(i);
+            return true;
+            }
+      }
 
-if(table[probe].key!=NULL){
-if(table[probe].key->getUniqId()==key->getUniqId()){
-
-pred=table[probe].data;
-record_stats(probe);
-
-return true;
-}}
-
-}while(table[probe].key!=NULL&&((hash(key->getUniqId())+i)%size)!=(hash(key->getUniqId())%size));
-std::cout<<"ffff "<<size<<" "<<size_index<<std::endl;
-return false;
+     }while(table[probe].key!=NULL&&((hash(key->getUniqId())+i)%size)!=(hash(key->getUniqId())%size));
+    record_stats(i);
+    return false;
 
 }
 
@@ -181,26 +177,20 @@ void LinearHashDict::add(MazeState *key, MazeState *pred) {
   if (4*(number+1) > 3*size) rehash();
 
   // TODO:  Your code goes here...
-   int probe;
-int i=0;
-std::cout<<"add "<<std::endl;
-do{
-probe=hash(key->getUniqId());
-probe=(probe+i)%size;
-i++;
-
-
-}while(table[probe].key!=NULL&&((hash(key->getUniqId())+i)%size)!=(hash(key->getUniqId())%size));
-if(table[probe].key==NULL){
-
-table[probe].key=key;
-table[probe].data=pred;
-number++;
-}
-
-std::cout<<""<<std::endl;
-
-return;
+  int probe;
+  int i=0;
+  do{
+      probe=hash(key->getUniqId());
+      probe=(probe+i)%size;
+      i++;
+    }while(table[probe].key!=NULL&&((hash(key->getUniqId())+i)%size)!=(hash(key->getUniqId())%size));
+         
+   if(table[probe].key==NULL){
+        table[probe].key=key;
+        table[probe].data=pred;
+        number++;
+       }
+    return;
 
    
 
