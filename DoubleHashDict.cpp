@@ -146,10 +146,10 @@ std::cout << "*** REHASHING " << size;
        table2=table;
 
   // Get a bigger table
-  do{
+  
      size_index++;
      size=primes[size_index];
-    }while(size<=osize);
+   
    table=new bucket[size]();
 
   // Rehash all the data over
