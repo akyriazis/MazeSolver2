@@ -100,7 +100,7 @@ TODO: the runtime is about 0.2s. the average number of probes is 4.5.
 precisely why the chosen hash function (hash1 in the DoubleHashDict)
 interacts so poorly with the notprimes table sizes.
 
-OPTIONAL TODO:
+OPTIONAL TODO: if the hash value is not prime, for random numbers divide by them, it will have more chance to have same remain which will increase number of probes and runtime
 
 ----------------------------------------------------------------------
 
