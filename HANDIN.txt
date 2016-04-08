@@ -65,7 +65,8 @@ TODO:
 5.  What is your runtime using LinearHashDict?  Based on the statistics
 printed out, what is the average number of probes for the find calls?
 
-TODO:
+TODO:  
+ it is around 2 s. From my calculation, the average number of probes is 2.33.
 
 6.  Change your LinearHashDict to use the notprimes array instead of the
 primes array for the table size.  (See the example in the constructor,
@@ -75,17 +76,17 @@ And what is the average number of probes for the find calls?
 (Be sure to change the code back to using primes before you handin
 your code!)
 
-TODO:
+TODO: The runtime time is around 9.02s. The average number of probes is 14.50.
 
 7.  What is your runtime using DoubleHashDict?  Based on the statistics
 printed out, what is the average number of probes for the find calls?
 
-TODO:
+TODO: runtime is around 0.2s. The average number of probes is 1.88
 
 8.  Change your DoubleHashDict to use the notprimes array instead of the
 primes array for the table size.  What happens?  Why?
 
-TODO:
+TODO: the programm keep running forever. I killed it after 3 mins. because it failed to find empty slots in hashmap.
 
 9.  Keeping your DoubleHashDict using notprimes, change to using hash3
 instead of hash2 for the probing.  What is your runtime using DoubleHashDict?
@@ -93,7 +94,7 @@ What is the average number of probes for the find calls?
 (Be sure to change the code back to using primes before you handin
 your code!)
 
-TODO:
+TODO: the runtime is about 0.2s. the average number of probes is 4.5.
 
 10(Bonus).  For a very small bonus (but a lot of fun), try to explain
 precisely why the chosen hash function (hash1 in the DoubleHashDict)
