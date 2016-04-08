@@ -103,10 +103,10 @@ std::cout << "*** REHASHING " << size;
     bucket *table2;
     table2=table;
   // Get a bigger table
-  do{
+  
       size_index++;
       size=primes[size_index];
-    }while(size<=osize);
+    
 
   table=new bucket[size]();
 
