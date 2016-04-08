@@ -34,22 +34,28 @@ For the explanations, generally a sentence or two should be enough.
 Type your answers directly in this file.
 
 
-1.  Give tight big-theta bounds on the worst-case runtime of the
-add and find functions in LinkedListDict.
+1.  Give tight big-theta bounds on the worst-case runtime of the add and find functions in LinkedListDict.
 
-TODO:
+add:
+    T(n) belongs to theta(1)
+find:
+    T(n) belongs to theta(n)
 
 2.  Run the 5x5 slider puzzle with HeapPriorityQueue and LinkedListDict.
 What runtime do you get?  This is roughly the performance you had
 for Project 1.
 
-TODO:
+~40 seconds (consistent with proj1)
 
 3.  Run the 5x5 slider puzzle with HeapPriorityQueue and your working
 AVLDict, LinearHashDict, and DoubleHashDict classes.
 What are your run times?  How do they compare to Q2?
 
-TODO:
+AVLDict: ~1 second
+LinearHashDict: ~1 second
+DoubleHashDict: ~1 second
+
+They are obviously much faster than the LinkedListDict because these data structures have more efficient algorithms for finding MazeStates. 
 
 For the remaining questions, we'll keep using HeapPriorityQueue,
 but switch to the UNSOLVABLE 3x3 slider puzzle to have something
@@ -59,8 +65,9 @@ being equal to 29.
 
 4.  What is your runtime using AVLDict?  Based on the statistics
 printed out, what is the average depth of the find calls?
-
-TODO:
+  
+~5 seconds
+average depth of 17 probes
 
 5.  What is your runtime using LinearHashDict?  Based on the statistics
 printed out, what is the average number of probes for the find calls?
