@@ -149,7 +149,7 @@ std::cout << "*** REHASHING " << size;
   
      size_index++;
      size=primes[size_index];
-   
+    
    table=new bucket[size]();
 
   // Rehash all the data over
@@ -157,11 +157,12 @@ std::cout << "*** REHASHING " << size;
         if(table2[j].key!=NULL){
             int probe;
             int i=0;
-            int p2;
-            int probe1;
+            int probe1=hash1(table2[j].key->getUniqId());
+            int p2=hash2(table2[j].key->getUniqId());
+
             do{
-                probe1=hash1(table2[j].key->getUniqId());
-                p2=hash2(table2[j].key->getUniqId());
+                
+               
                 probe=(probe1+i*p2)%size;
                 i++;
               }while(table[probe].key!=NULL&&(((probe1+i*p2)%size)!=(probe1%size)));
@@ -192,11 +193,9 @@ bool DoubleHashDict::find(MazeState *key, MazeState *&pred) {
   // TODO:  Your code goes here...
       int probe;
       int i=0;
-      int p2;
-      int probe1;
+      int probe1=hash1(key->getUniqId());
+      int p2=hash2(key->getUniqId());
       do{
-          probe1=hash1(key->getUniqId());
-          p2=hash2(key->getUniqId());
           probe=(probe1+i*p2)%size;
           i++;
           if(table[probe].key!=NULL){
@@ -219,13 +218,11 @@ void DoubleHashDict::add(MazeState *key, MazeState *pred) {
   // TODO:  Your code goes here...
    int probe;
    int i=0;
-   int probe1;
-   int p2;
+   int probe1=hash1(key->getUniqId());
+   int p2=hash2(key->getUniqId());
     do{
-       probe1=hash1(key->getUniqId());
-       p2=hash2(key->getUniqId());
-       probe=(probe1+i*p2)%size;
-       i++;
+         probe=(probe1+i*p2)%size;
+         i++;
        }while(table[probe].key!=NULL&&(((probe1+i*p2)%size)!=(probe1%size)));
     
     if(table[probe].key==NULL){
