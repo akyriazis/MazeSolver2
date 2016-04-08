@@ -88,11 +88,11 @@ void LinearHashDict::rehash() {
 // And leave this at the beginning of the rehash() function.
 // We will use this code when marking to be able to watch what
 // your program is doing, so if you change things, we'll mark it wrong.
-std::cout<<"hash1"<<std::endl;
+
 #ifdef MARKING_TRACE
 std::cout << "*** REHASHING " << size;
 #endif
-std::cout<<"hash"<<std::endl;
+
 // End of "DO NOT CHANGE" Block
 
 
