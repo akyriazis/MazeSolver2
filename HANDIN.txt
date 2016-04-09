@@ -125,7 +125,15 @@ your code!)
 precisely why the chosen hash function (hash1 in the DoubleHashDict)
 interacts so poorly with the notprimes table sizes.
 
-    If the hash value is not prime, dividing by random numbers will yield a higher chance of collisions.
+    We don't have a definite answer but we have a guess. The slider 
+    puzzle outputs uniqueIDs that are string representations of the 
+    numbers in the slider (numbers from 0-9). In the hash function 
+    these are interpreted by their ascii code, which are numbers (30-39). 
+    There are only 2 prime numbers (31 and 37) in this range. This 
+    means that multiplying this by a similar number in value (31, a 
+    parameter of the hash function), will likely yield a number that 
+    is not prime. Hashing with a non-prime number, and a non-prime 
+    table size will likely give collisions.
 
 ----------------------------------------------------------------------
 
