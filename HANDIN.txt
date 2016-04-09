@@ -16,7 +16,7 @@ TODO: submit using: make handin-proj2
 
 ----------------------------------------------------------------------
 
-Approximate hours on project: TODO: ~5 hour each
+Approximate hours on project: ~5 hour each
 
 ----------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ HANDIN.txt: both
 
 ----------------------------------------------------------------------
 
-Acknowledgment of assistance: TODO:
+Acknowledgment of assistance: NONE
 
 ----------------------------------------------------------------------
 
