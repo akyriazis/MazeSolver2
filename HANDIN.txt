@@ -59,9 +59,9 @@ for Project 1.
 AVLDict, LinearHashDict, and DoubleHashDict classes.
 What are your run times?  How do they compare to Q2?
 
-    AVLDict: ~1 second
-    LinearHashDict: ~1 second
-    DoubleHashDict: ~1 second
+    AVLDict: ~0.3 seconds
+    LinearHashDict: ~0.7 seconds
+    DoubleHashDict: ~0.4 seconds
     
 
 They are obviously much faster than the LinkedListDict because these data structures have more efficient algorithms for finding MazeStates. 
@@ -75,14 +75,14 @@ being equal to 29.
 4.  What is your runtime using AVLDict?  Based on the statistics
 printed out, what is the average depth of the find calls?
 
-    ~5 seconds
+    ~4 seconds
     average depth of 16.74 probes
     
 
 5.  What is your runtime using LinearHashDict?  Based on the statistics
 printed out, what is the average number of probes for the find calls?
 
-    ~2 seconds. 
+    ~4 seconds. 
     Average number of probes is 2.63.
 
 6.  Change your LinearHashDict to use the notprimes array instead of the
@@ -93,13 +93,13 @@ And what is the average number of probes for the find calls?
 (Be sure to change the code back to using primes before you handin
 your code!)
 
-    ~9 seconds
+    ~12 seconds
     Average number of probes is 12.29.
 
 7.  What is your runtime using DoubleHashDict?  Based on the statistics
 printed out, what is the average number of probes for the find calls?
 
-    < 1 second
+    ~3 seconds
     Average number of probes is 1.97
 
 8.  Change your DoubleHashDict to use the notprimes array instead of the
@@ -110,7 +110,7 @@ primes array for the table size.  What happens?  Why?
     
     This is because it is probing infinitely and the hash
     dictionary fails to find an empty place, it keeps 
-    searching the same places.
+    searching the same 'full' places.
 
 9.  Keeping your DoubleHashDict using notprimes, change to using hash3
 instead of hash2 for the probing.  What is your runtime using DoubleHashDict?
@@ -118,7 +118,7 @@ What is the average number of probes for the find calls?
 (Be sure to change the code back to using primes before you handin
 your code!)
 
-    < 1 second
+    ~3 seconds
     Average number of probes is 4.62.
 
 10(Bonus).  For a very small bonus (but a lot of fun), try to explain
