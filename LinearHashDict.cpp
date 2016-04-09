@@ -25,14 +25,14 @@ const int LinearHashDict::notprimes[] = {100, 300, 1000, 3000, 10000,
 // List of bad sizes for the hash table and this hash function...
 
 LinearHashDict::LinearHashDict() {
-  size_index = 0;
-  size = primes[size_index];
-  //size = notprimes[size_index];
-  table = new bucket[size](); // Parentheses force initialization to 0
-  number = 0;
+    size_index = 0;
+    size = primes[size_index];
+    //size = notprimes[size_index];
+    table = new bucket[size](); // Parentheses force initialization to 0
+    number = 0;
 
-  // Initialize the array of counters for probe statistics
-  probes_stats = new int[MAX_STATS]();
+    // Initialize the array of counters for probe statistics
+    probes_stats = new int[MAX_STATS]();
 }
 
 LinearHashDict::~LinearHashDict() {
@@ -89,78 +89,76 @@ void LinearHashDict::rehash() {
 // We will use this code when marking to be able to watch what
 // your program is doing, so if you change things, we'll mark it wrong.
 
-#ifdef MARKING_TRACE
-std::cout << "*** REHASHING " << size;
-#endif
+    #ifdef MARKING_TRACE
+    std::cout << "*** REHASHING " << size;
+    #endif
 
-// End of "DO NOT CHANGE" Block
+    // End of "DO NOT CHANGE" Block
 
 
-  // TODO:  Your code goes here...
+    // TODO:  Your code goes here...
 
-  // Keep a pointer to the old table.
+    // Keep a pointer to the old table.
     int osize=size;
     bucket *table2;
     table2=table;
-  // Get a bigger table
-      size_index++;
-      size=primes[size_index];
-      table=new bucket[size]();
+    // Get a bigger table
+    size_index++;
+    size=primes[size_index];
+    table=new bucket[size]();
 
-  // Rehash all the data over
-  for (int j=0; j<osize; j++){
-      if(table2[j].key!=NULL){
-         int probe;
-         int i=0;
-         do{  
-              probe=hash(table2[j].key->getUniqId()); 
-              probe=(probe+i)%size;
-              i++;
+    // Rehash all the data over
+    for (int j=0; j<osize; j++){
+        if(table2[j].key!=NULL){
+            int probe;
+            int i=0;
+            do{  
+                probe=hash(table2[j].key->getUniqId()); 
+                probe=(probe+i)%size;
+                i++;
             }while(table[probe].key!=NULL&&((hash(table2[j].key->getUniqId())+i)%size)!=(hash(table2[j].key->getUniqId()))%size);
-    
-         table[probe].key=table2[j].key;
-         table[probe].data=table2[j].data;
+
+            table[probe].key=table2[j].key;
+            table[probe].data=table2[j].data;
        }
-    
-      }
+    }
    
     
-  // No need to delete the data, as all copied into new table.
+    // No need to delete the data, as all copied into new table.
 
 
-// 221 Students:  DO NOT CHANGE OR DELETE THE NEXT FEW LINES!!!
-// And leave this at the end of the rehash() function.
-// We will use this code when marking to be able to watch what
-// your program is doing, so if you change things, we'll mark it wrong.
-#ifdef MARKING_TRACE
-std::cout << " to " << size << " ***\n";
-#endif
-// End of "DO NOT CHANGE" Block
-return;
+    // 221 Students:  DO NOT CHANGE OR DELETE THE NEXT FEW LINES!!!
+    // And leave this at the end of the rehash() function.
+    // We will use this code when marking to be able to watch what
+    // your program is doing, so if you change things, we'll mark it wrong.
+    #ifdef MARKING_TRACE
+    std::cout << " to " << size << " ***\n";
+    #endif
+    // End of "DO NOT CHANGE" Block
+    return;
 }
 
 bool LinearHashDict::find(MazeState *key, MazeState *&pred) {
-  // Returns true iff the key is found.
-  // Returns the associated value in pred
+    // Returns true iff the key is found.
+    // Returns the associated value in pred
 
-  // TODO:  Your code goes here...
-     int probe;
-     int i=0;
+    // TODO:  Your code goes here...
+    int probe;
+    int i=0;
 
     do{
-      probe=hash(key->getUniqId());
-      probe=(probe+i)%size;
-      i++;
-      if(table[probe].key!=NULL)
-      {
-         if(table[probe].key->getUniqId()==key->getUniqId()){
-            pred=table[probe].data;
-            record_stats(i);
-            return true;
+        probe=hash(key->getUniqId());
+        probe=(probe+i)%size;
+        i++;
+        if(table[probe].key!=NULL){
+            if(table[probe].key->getUniqId()==key->getUniqId()){
+                pred=table[probe].data;
+                record_stats(i);
+                return true;
             }
-      }
-
-     }while(table[probe].key!=NULL&&((hash(key->getUniqId())+i)%size)!=(hash(key->getUniqId())%size));
+        }
+    }while(table[probe].key!=NULL&&((hash(key->getUniqId())+i)%size)!=(hash(key->getUniqId())%size));
+    
     record_stats(i);
     return false;
 
@@ -169,27 +167,24 @@ bool LinearHashDict::find(MazeState *key, MazeState *&pred) {
 // You may assume that no duplicate MazeState is ever added.
 void LinearHashDict::add(MazeState *key, MazeState *pred) {
 
-  // Rehash if adding one more element pushes load factor over 3/4
-  if (4*(number+1) > 3*size) rehash();
+    // Rehash if adding one more element pushes load factor over 3/4
+    if (4*(number+1) > 3*size) rehash();
 
-  // TODO:  Your code goes here...
-  int probe;
-  int i=0;
-  do{
+    // TODO:  Your code goes here...
+    int probe;
+    int i=0;
+    do{
       probe=hash(key->getUniqId());
       probe=(probe+i)%size;
       i++;
     }while(table[probe].key!=NULL&&((hash(key->getUniqId())+i)%size)!=(hash(key->getUniqId())%size));
          
-   if(table[probe].key==NULL){
+    if(table[probe].key==NULL){
         table[probe].key=key;
         table[probe].data=pred;
         number++;
-       }
+    }
     return;
-
-   
-
 }
 
 #endif 
