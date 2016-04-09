@@ -103,21 +103,17 @@ std::cout << "*** REHASHING " << size;
     bucket *table2;
     table2=table;
   // Get a bigger table
-  
       size_index++;
       size=primes[size_index];
-   
-
-  table=new bucket[size]();
+      table=new bucket[size]();
 
   // Rehash all the data over
   for (int j=0; j<osize; j++){
       if(table2[j].key!=NULL){
-         int probe=hash(table2[j].key->getUniqId());
+         int probe;
          int i=0;
-         do{
-    
-              
+         do{  
+              probe=hash(table2[j].key->getUniqId()); 
               probe=(probe+i)%size;
               i++;
             }while(table[probe].key!=NULL&&((hash(table2[j].key->getUniqId())+i)%size)!=(hash(table2[j].key->getUniqId()))%size);
@@ -148,11 +144,11 @@ bool LinearHashDict::find(MazeState *key, MazeState *&pred) {
   // Returns the associated value in pred
 
   // TODO:  Your code goes here...
-     int probe=hash(key->getUniqId());;
+     int probe;
      int i=0;
 
     do{
-      
+      probe=hash(key->getUniqId());
       probe=(probe+i)%size;
       i++;
       if(table[probe].key!=NULL)
@@ -177,10 +173,10 @@ void LinearHashDict::add(MazeState *key, MazeState *pred) {
   if (4*(number+1) > 3*size) rehash();
 
   // TODO:  Your code goes here...
-  int probe=hash(key->getUniqId());
+  int probe;
   int i=0;
   do{
-      
+      probe=hash(key->getUniqId());
       probe=(probe+i)%size;
       i++;
     }while(table[probe].key!=NULL&&((hash(key->getUniqId())+i)%size)!=(hash(key->getUniqId())%size));
