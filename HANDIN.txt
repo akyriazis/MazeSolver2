@@ -83,7 +83,7 @@ printed out, what is the average depth of the find calls?
 printed out, what is the average number of probes for the find calls?
 
     ~2 seconds. 
-    Average number of probes is 2.33.
+    Average number of probes is 2.63.
 
 6.  Change your LinearHashDict to use the notprimes array instead of the
 primes array for the table size.  (See the example in the constructor,
@@ -94,13 +94,13 @@ And what is the average number of probes for the find calls?
 your code!)
 
     ~9 seconds
-    Average number of probes is 14.50.
+    Average number of probes is 12.289.
 
 7.  What is your runtime using DoubleHashDict?  Based on the statistics
 printed out, what is the average number of probes for the find calls?
 
     < 1 second
-    Average number of probes is 1.88
+    Average number of probes is 1.97
 
 8.  Change your DoubleHashDict to use the notprimes array instead of the
 primes array for the table size.  What happens?  Why?
@@ -119,7 +119,7 @@ What is the average number of probes for the find calls?
 your code!)
 
     < 1 second
-    Average number of probes is 4.5.
+    Average number of probes is 4.6163.
 
 10(Bonus).  For a very small bonus (but a lot of fun), try to explain
 precisely why the chosen hash function (hash1 in the DoubleHashDict)
